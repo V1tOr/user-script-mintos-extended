@@ -7,7 +7,8 @@
 // @match        https://www.mintos.com/en/invest-en/*-market/*
 // @grant        none
 // @supportURL   https://github.com/V1tOr/user-script-mintos-extended/issues
-// @downloadURL
+// @downloadURL  https://github.com/V1tOr/user-script-mintos-extended/raw/master/mintos-extended.user.js
+// @updateURL    https://github.com/V1tOr/user-script-mintos-extended/raw/master/mintos-extended.user.js
 // ==/UserScript==
 
 (function ($) {
@@ -15,6 +16,7 @@
 
     var investValue = 10;
     var filterResultsWrapper = $("#filter-results-wrapper");
+    var currencySpanHtml = $("#sel-header-balance span")[0].outerHTML;
 
     var observer = new MutationObserver(function (mutations) {
 
@@ -23,12 +25,9 @@
             .appendTo(thead)
             .find("input")
             .on("change", (e) => {
-
                 investValue = e.currentTarget.value;
                 render();
-
             });
-
 
         render()
 
@@ -45,7 +44,6 @@
     function calc(investement, rate, days) {
         return (investement * (rate / 100) / 365) * days;
     }
-
 
     function render() {
 
@@ -76,12 +74,11 @@
 
             var toolTip = '<i class="fas fa-info-circle tooltip-color-gray" data-tooltip="( ' + investValue + ' * ' + rate + '% / 365 * ' + days + ')" data-placement="bottom" data-placement-on-mobile="bottom" data-theme="dark" data-tooltip-trigger="hover,click"></i>'
 
-            var profitColumn = $('<td class="global-align-right m-labeled-col mod-highlighted" data-m-label="Profit"><span title="EUR">€</span> ' + profit + toolTip + '</td>');
+            var profitColumn = $('<td class="global-align-right m-labeled-col mod-highlighted" data-m-label="Profit">' + currencySpanHtml + profit + toolTip + '</td>');
             profitColumn.appendTo(element);
         });
 
         performTooltipInitForBlock();
-
     }
 
 })(jQuery);
