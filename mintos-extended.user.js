@@ -57,8 +57,7 @@
             if (monthsAndDays) {
                 days = parseInt(monthsAndDays[1] * 30) + parseInt(monthsAndDays[2]);
             }
-            else {
-                monthsAndDays = termText.match(/(\d*) d./);
+            else if(monthsAndDays = termText.match(/(\d*) d./)) {
                 days = parseInt(monthsAndDays[1])
             }
 
